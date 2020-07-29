@@ -1,0 +1,8 @@
+# node modules folder
+/node_modules
+
+# enviornment variables
+.env
+
+# service account on mysql db for the application
+/sql/CreateUser.sql

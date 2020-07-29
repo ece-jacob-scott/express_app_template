@@ -1,0 +1,34 @@
+<%- include('../layouts/form-header', { title: 'Register' }) %>
+
+<main class="form-holder mui-panel">
+  <form action="/register" method="POST">
+    <h1>Register</h1>
+    <% if (messages.error) { %>
+    <p style="color: red; font-size: 0.8em;">*<%= messages.error %></p>
+    <% } %>
+    <div class="mui-textfield">
+      <input
+        type="text"
+        placeholder="Username:"
+        id="username"
+        name="username"
+      />
+    </div>
+
+    <div class="mui-textfield">
+      <input type="email" placeholder="Email:" id="email" name="email" />
+    </div>
+
+    <div class="mui-textfield">
+      <input
+        type="password"
+        placeholder="Password:"
+        id="password"
+        name="password"
+      />
+    </div>
+
+    <button class="mui-btn mui-btn--primary" type="submit">Register</button>
+    <a href="/login">or login</a>
+  </form>
+</main>

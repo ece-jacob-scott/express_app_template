@@ -1,0 +1,40 @@
+{
+  "name": "simple-prod-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "www/server.js",
+  "scripts": {
+    "dev": "nodemon www/server.js",
+    "build:watch": "sass --watch views/styles:public/styles",
+    "docker:down": "docker-compose down -v",
+    "docker:up": "docker-compose up -d",
+    "docker:inMySQL": "docker exec -it mysql_service mysql -u root -p",
+    "docker:logsMySQL": "docker logs mysql_service",
+    "docker:logsRedis": "docker logs redis_service"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "connect-flash": "^0.1.1",
+    "connect-redis": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "joi": "^17.1.1",
+    "method-override": "^3.0.0",
+    "mysql": "^2.18.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "sass": "^1.26.10"
+  }
+}

@@ -1,0 +1,110 @@
+/**
+ * Body CSS
+ */
+html,
+body {
+  height: 100%;
+}
+
+html,
+body,
+input,
+textarea,
+button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+/**
+ * Header CSS
+ */
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+
+header ul.mui-list--inline {
+  margin-bottom: 0;
+}
+
+header a {
+  color: #fff;
+}
+
+header table {
+  width: 100%;
+}
+
+/**
+ * Content CSS
+ */
+#content-wrapper {
+  min-height: 100%;
+  /* sticky footer */
+  box-sizing: border-box;
+  margin-bottom: -100px;
+  padding-bottom: 100px;
+}
+
+/**
+ * Footer CSS
+ */
+footer {
+  box-sizing: border-box;
+  height: 100px;
+  background-color: #eee;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 35px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  background-color: #54a5c4;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+input {
+  color: #535353 !important;
+}
+
+button {
+  color: #e4e4e4 !important;
+  background-color: #349dc7 !important;
+  width: 100%;
+}
+
+.form-holder {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 45vh);
+  width: 30%;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  background-color: #a8e7ff;
+}
+
+form {
+  width: 80%;
+}
+
+form > h1 {
+  color: #349dc7;
+}
+
+a {
+  float: right;
+  font-size: 0.7em;
+  color: #297b9b;
+}
+
+/*# sourceMappingURL=form-styles.css.map */

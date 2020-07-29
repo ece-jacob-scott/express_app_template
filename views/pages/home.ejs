@@ -1,0 +1,28 @@
+<%- include('../layouts/header', { title: 'Home' }) %>
+
+<!--prettier-ignore-->
+<%- include('../layouts/top', { user: user }) %>
+
+<div id="content-wrapper" class="mui--text-center">
+  <div class="mui--appbar-height"></div>
+  <br />
+  <br />
+  <div class="mui--text-display3 row wow zoomInDown">
+    <h1>Hello <%= user.username %>!</h1>
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <i
+    class="fa fa-university fa-5x mui--text-display3 mui--color-pink-A100 row wow zoomIn"
+    aria-hidden="true"
+  ></i>
+</div>
+
+<%- include('../layouts/foot') %>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+  new WOW().init();
+</script>

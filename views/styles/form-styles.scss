@@ -1,0 +1,42 @@
+@import "_variables";
+@import "main";
+
+body {
+  @include center-body;
+  overflow: hidden;
+}
+
+input {
+  color: $font-color !important;
+}
+
+button {
+  color: #e4e4e4 !important;
+  background-color: $primary-color !important;
+  width: 100%;
+}
+
+.form-holder {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 45vh);
+  width: 30%;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  background-color: $secondary-background-color;
+}
+
+form {
+  width: 80%;
+}
+
+form > h1 {
+  color: $primary-color;
+}
+
+form > h1 > a {
+  float: right;
+  font-size: 0.7em;
+  color: $secondary-color;
+}
