@@ -40,6 +40,12 @@ function handleLogout(url) {
     const postForm = document.createElement('form');
     postForm.action = url;
     postForm.method = 'post';
+    const hiddenCSRF = document.createElement('input');
+    hiddenCSRF.value = "<%= _csrf %>";
+    hiddenCSRF.name = "_csrf";
+    hiddenCSRF.id = "_csrf";
+    hiddenCSRF.type = "hidden";
+    postForm.appendChild(hiddenCSRF);
     const bodyTag = document.getElementsByTagName('body')[0];
     bodyTag.appendChild(postForm);
     postForm.submit();

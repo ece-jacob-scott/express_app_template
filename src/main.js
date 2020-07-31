@@ -6,7 +6,6 @@ const flash = require("express-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const redis = require("redis");
-const methodOverride = require("method-override");
 const initializePassport = require("./passport-config");
 const { handleError, APIError } = require("./shared/error-handling");
 const userService = require("./services/user-service");
@@ -46,9 +45,19 @@ app.use(
   })
 );
 app.use(flash());
-app.use(methodOverride("_method"));
+app.use(
+  require("csurf")({
+    cookie: {
+      sameSite: true,
+      maxAge: 3600,
+      httpOnly: true,
+      secure: process.env.ENVIORNMENT === "prod",
+    },
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(require("helmet")());
 
 // only set this up if starting in dev mode
 if (process.env.ENVIORNMENT === "dev") {
@@ -72,11 +81,11 @@ function checkAuthed(authed, redirect) {
 }
 
 app.get("/", checkAuthed(true, "/login"), (req, res, next) => {
-  res.render("./pages/home", { user: req.user });
+  res.render("./pages/home", { user: req.user, _csrf: req.csrfToken() });
 });
 
 app.get("/register", checkAuthed(false, "/"), (req, res, next) => {
-  res.render("./pages/register");
+  res.render("./pages/register", { _csrf: req.csrfToken() });
 });
 
 app.post("/register", checkAuthed(false, "/"), async (req, res, next) => {
@@ -96,7 +105,7 @@ app.post("/logout", checkAuthed(true, "/login"), (req, res, next) => {
 });
 
 app.get("/login", checkAuthed(false, "/"), (req, res, next) => {
-  res.render("./pages/login");
+  res.render("./pages/login", { _csrf: req.csrfToken() });
 });
 
 app.post(
