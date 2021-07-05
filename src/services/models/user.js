@@ -1,4 +1,4 @@
-const joi = require("joi");
+import joi from "joi";
 const { queryProm } = require("../../shared/mysql-conn");
 const bcrypt = require("bcrypt");
 
@@ -31,10 +31,15 @@ class UserModel {
   async create(user) {
     // NOTE: user = has been validated by UserSchema
     try {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const hashedPassword = await bcrypt.hash(
+        user.password,
+        // process.env.BCRYPT_ROUNDS || 10 // defaults to string which is wrong :(
+        10
+      );
 
       await queryProm(
-        `INSERT INTO users (username, pass, email) VALUES ('${user.username}', '${hashedPassword}', '${user.email}')`
+        "INSERT INTO users (username, pass, email) VALUES (?, ?, ?)",
+        [user.username, hashedPassword, user.email]
       );
     } catch (err) {
       throw err;
@@ -44,7 +49,8 @@ class UserModel {
   async getByUsername(username) {
     try {
       const results = await queryProm(
-        `SELECT * FROM users WHERE username = '${username}'`
+        "SELECT BIN_TO_UUID(id) id, username, pass, email FROM users WHERE username = ?",
+        username
       );
 
       return results.map((user) => new User(user));
@@ -55,7 +61,14 @@ class UserModel {
 
   async getByID(id) {
     try {
-      const results = await queryProm(`SELECT * FROM users WHERE id = ${id}`);
+      const results = await queryProm(
+        "SELECT BIN_TO_UUID(id) id, username, pass, email FROM users WHERE id = UUID_TO_BIN(?)",
+        id
+      );
+
+      if (results.length == 0) {
+        throw new Error(`no user with id=${id}`);
+      }
 
       return new User(results[0]);
     } catch (err) {
@@ -66,7 +79,8 @@ class UserModel {
   async getByEmail(email) {
     try {
       const results = await queryProm(
-        `SELECT * FROM users WHERE email = '${email}'`
+        "SELECT BIN_TO_UUID(id) id, username, pass, email FROM users WHERE email = ?",
+        email
       );
 
       return results.map((user) => new User(user));

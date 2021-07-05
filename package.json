@@ -2,15 +2,18 @@
   "name": "simple-prod-app",
   "version": "1.0.0",
   "description": "",
-  "main": "www/server.js",
+  "main": "src/www/server.js",
   "scripts": {
-    "dev": "nodemon www/server.js",
-    "build:watch": "sass --watch views/styles:public/styles",
+    "dev": "nodemon dist/www/server.js",
+    "build:watch": "npm-run-all -p build:watch:sass build:watch:babel",
+    "build:watch:sass": "sass --watch views/styles:public/styles",
+    "build:watch:babel": "babel ./src --watch --out-dir dist",
     "docker:down": "docker-compose down -v",
     "docker:up": "docker-compose up -d",
     "docker:inMySQL": "docker exec -it mysql_service mysql -u root -p",
     "docker:logsMySQL": "docker logs mysql_service",
-    "docker:logsRedis": "docker logs redis_service"
+    "docker:logsRedis": "docker logs redis_service",
+    "bower:install": "bower install mui"
   },
   "keywords": [],
   "author": "",
@@ -33,9 +36,22 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
     "dotenv": "^8.2.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.26.10"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
+    ]
   }
 }

@@ -20,9 +20,10 @@ npm i
 npm run docker:up
 ```
 
-4. Start the dev server:
+4. Start the dev server and builders:
 
 ```sh
+npm run build:watch
 npm run dev
 ```
 
@@ -43,34 +44,27 @@ application is located in the www folder.
 
 ## dev
 
+Start a nodemon server that will serve the server code on `localhost:3000`.
+
 ## build:watch
+
+Start `babel` and `sass` build watchers so that when a piece of code changes it
+gets rebuilt to be served. When using hot reloading for development use
+`npm run dev` and `npm run build:watch`.
 
 ## docker:down
 
+Delete all the docker containers (redis and mysql) and their data sources for a
+fresh restart.
+
 ## docker:up
 
-## docker:in
+Bring up all the docker containers defined in the `docker-compose.yml` file.
 
-## docker:logs
+## docker:inMySQL
 
-# Folder Structure/Explanation
+Use the `mysql` cli inside the `mysql_service` container.
 
-## /public
+## docker:logs(MySQL|Redis)
 
-## /sql
-
-## /src
-
-### /services
-
-#### /models
-
-### /shared
-
-## /views
-
-### /layouts
-
-### /pages
-
-### /styles
+Get the logs for either the MySQL container or the Redis container.

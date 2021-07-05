@@ -1,4 +1,4 @@
-const app = require("../src/main");
+const app = require("../main");
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

@@ -7,12 +7,10 @@ body {
 }
 
 input {
-  color: $font-color !important;
+  color: $text1 !important;
 }
 
 button {
-  color: #e4e4e4 !important;
-  background-color: $primary-color !important;
   width: 100%;
 }
 
@@ -20,11 +18,11 @@ button {
   display: grid;
   place-items: center;
   min-height: calc(100vh - 45vh);
-  width: 30%;
+  width: 85%;
   border-radius: 5px;
   padding: 0;
   margin: 0;
-  background-color: $secondary-background-color;
+  background-color: $surface2;
 }
 
 form {
@@ -32,11 +30,21 @@ form {
 }
 
 form > h1 {
-  color: $primary-color;
+  color: $text1;
+}
+
+form > a {
+  color: $text1;
 }
 
 form > h1 > a {
   float: right;
   font-size: 0.7em;
-  color: $secondary-color;
+  color: $text1;
+}
+
+@media (min-width: $mui-screen-md-min) {
+  .form-holder {
+    width: 40%;
+  }
 }

@@ -1,3 +1,34 @@
+@import "../../bower_components/mui/src/sass/mui/colors";
+
+$brand-hue: 151;
+$brand-saturation: 82%;
+$brand-lightness: 68%;
+
+$brand-light: hsl($brand-hue $brand-saturation $brand-lightness);
+$text1-light: hsl($brand-hue $brand-saturation 10%);
+$text2-light: hsl($brand-hue 30% 30%);
+$surface1-light: hsl($brand-hue 25% 90%);
+$surface2-light: hsl($brand-hue 20% 99%);
+$surface3-light: hsl($brand-hue 20% 92%);
+$surface4-light: hsl($brand-hue 20% 85%);
+$surface-shadow-light: $brand-hue 10% 20%;
+$shadow-strength-light: 0.02;
+
+$brand: $brand-light;
+$text1: $text1-light;
+$text2: $text2-light;
+$surface1: $surface1-light;
+$surface2: $surface2-light;
+$surface3: $surface3-light;
+$surface4: $surface4-light;
+$surface-shadow: $surface-shadow-light;
+$shadow-strength: $shadow-strength-light;
+
+$mui-primary-color: mui-color("green", "A200");
+$mui-accent-color: mui-color("green", "A100");
+
+@import "../../bower_components/mui/src/sass/mui.scss";
+
 $background-color: #54a5c4;
 $secondary-background-color: #a8e7ff;
 $font-color: #535353;

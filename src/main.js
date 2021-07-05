@@ -1,28 +1,26 @@
 require("dotenv").config();
-const express = require("express");
+import express from "express";
 const app = express();
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const redis = require("redis");
+import redis from "redis";
 const initializePassport = require("./passport-config");
-const { handleError, APIError } = require("./shared/error-handling");
-const userService = require("./services/user-service");
+const { APIError } = require("./shared/error-handling");
 const { UserModel } = require("./services/models/user");
-
-initializePassport(
-  passport,
-  (username) => {
-    return UserModel.getByUsername(username);
-  },
-  (id) => {
-    return UserModel.getByID(id);
-  }
-);
+const userRoutes = require("./routes/user-routes");
 
 // sets simple view engine to be ejs
 app.set("view engine", "ejs");
+app.use(require("helmet")());
+// I don't have any of these files so send 204
+app.get("/favicon.ico", (req, res, next) => {
+  res.status(204);
+});
+app.get("/service-worker.js", (req, res, next) => {
+  res.status(204);
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
@@ -51,16 +49,25 @@ app.use(
       sameSite: true,
       maxAge: 3600,
       httpOnly: true,
-      secure: process.env.ENVIORNMENT === "prod",
+      secure: process.env.ENVIRONMENT === "prod",
     },
   })
 );
+// passport initialization
+initializePassport(
+  passport,
+  (username) => {
+    return UserModel.getByUsername(username);
+  },
+  (id) => {
+    return UserModel.getByID(id);
+  }
+);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require("helmet")());
 
 // only set this up if starting in dev mode
-if (process.env.ENVIORNMENT === "dev") {
+if (process.env.ENVIRONMENT === "dev") {
   console.log("Starting Server in dev mode");
 
   app.use(require("morgan")("dev"));
@@ -84,39 +91,7 @@ app.get("/", checkAuthed(true, "/login"), (req, res, next) => {
   res.render("./pages/home", { user: req.user, _csrf: req.csrfToken() });
 });
 
-app.get("/register", checkAuthed(false, "/"), (req, res, next) => {
-  res.render("./pages/register", { _csrf: req.csrfToken() });
-});
-
-app.post("/register", checkAuthed(false, "/"), async (req, res, next) => {
-  try {
-    await userService.register(req.body);
-    res.redirect("/login");
-  } catch (err) {
-    // set the flash error message to show to the user
-    req.flash("error", err.message);
-    res.redirect("/register");
-  }
-});
-
-app.post("/logout", checkAuthed(true, "/login"), (req, res, next) => {
-  req.logOut();
-  res.redirect("/login");
-});
-
-app.get("/login", checkAuthed(false, "/"), (req, res, next) => {
-  res.render("./pages/login", { _csrf: req.csrfToken() });
-});
-
-app.post(
-  "/login",
-  checkAuthed(false, "/"),
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true,
-  })
-);
+app.use(userRoutes);
 
 app.use((req, res, next) => {
   next(

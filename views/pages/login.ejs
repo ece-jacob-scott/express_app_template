@@ -4,7 +4,7 @@
   <form action="/login" method="POST">
     <h1>Login</h1>
     <% if (messages.error) { %>
-    <p style="color: red; font-size: 0.8em;">*<%= messages.error %></p>
+    <p style="color: red; font-size: 0.8em">*<%= messages.error %></p>
     <% } %>
     <div class="mui-textfield">
       <input
@@ -25,7 +25,9 @@
     </div>
 
     <input type="hidden" id="_csrf" name="_csrf" value="<%= _csrf %>" />
-    <button class="mui-btn mui-btn--primary" type="submit">Login</button>
-    <a href="/register">or register</a>
+    <button class="mui-btn mui-btn--raised mui-btn--primary" type="submit">
+      Login
+    </button>
+    <a style="float: right" href="/register">or register</a>
   </form>
 </main>
